@@ -18,25 +18,32 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
-    <!-- Servlet API-->
+    <!-- Servlet API -->
     <dependency>
       <groupId>jakarta.servlet</groupId>
       <artifactId>jakarta.servlet-api</artifactId>
       <version>6.1.0</version>
       <scope>provided</scope>
     </dependency>
-    <!-- HTTP Client API 호출용-->
+    <!-- HTTP Client API 호출용 -->
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
       <version>4.5.13</version>
     </dependency>
-    <!-- JACKSON JSON 처리용-->
+    <!-- JACKSON JSON 처리용 -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
       <version>2.18.3</version>
     </dependency>
+    <!-- dotenv 의존성 -->
+    <dependency>
+      <groupId>io.github.cdimascio</groupId>
+      <artifactId>dotenv-java</artifactId>
+      <version>2.2.4</version>
+    </dependency>
+
   </dependencies>
   <build>
     <finalName>kbo-master</finalName>
