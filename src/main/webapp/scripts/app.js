@@ -40,58 +40,55 @@ document.addEventListener("DOMContentLoaded", function() {
                     const items = newsJson.items;
                     const newsContainer = document.getElementById("newsContainer");
                     newsContainer.innerHTML = "";
+
+                    if (items.length === 0) {
+                        newsContainer.innerHTML = "<p class='text-center'>관련 뉴스가 없습니다.</p>";
+                        return;
+                    }
+
                     items.forEach(item => {
-                        const card = document.createElement("div");
-                        card.className = "card mb-3";
+                        // 새로운 뉴스 아이템 카드 생성
+                        const newsItem = document.createElement("div");
+                        newsItem.className = "news-item-card mb-3";
 
-                        const row = document.createElement("div");
-                        row.className = "row g-0";
+                        // 카드 내부 구조 생성
+                        newsItem.innerHTML = `
+                            <div class="row g-0">
+                                <div class="col-md-3">
+                                    <img src="${item.image || "/api/placeholder/300/200"}" 
+                                         alt="뉴스 이미지" 
+                                         class="news-thumbnail">
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="news-content">
+                                        <h5 class="news-title">${item.title}</h5>
+                                        <p class="news-description">${item.description}</p>
+                                        <p class="news-date">${item.pubDate}</p>
+                                        <a href="${item.link}" target="_blank" class="news-link">기사 읽기</a>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
 
-                        const imgCol = document.createElement("div");
-                        imgCol.className = "col-md-4";
-                        const img = document.createElement("img");
-                        img.className = "img-fluid rounded-start news-img";
-                        // item.image 값 사용, 없으면 placeholder 사용
-                        img.src = item.image || "https://via.placeholder.com/300x200?text=No+Image";
-                        img.alt = "뉴스 이미지";
-                        imgCol.appendChild(img);
-
-                        const textCol = document.createElement("div");
-                        textCol.className = "col-md-8";
-                        const cardBody = document.createElement("div");
-                        cardBody.className = "card-body";
-
-                        const title = document.createElement("h5");
-                        title.className = "card-title";
-                        title.innerHTML = item.title;
-
-                        const description = document.createElement("p");
-                        description.className = "card-text";
-                        description.innerHTML = item.description;
-
-                        const pubDate = document.createElement("p");
-                        pubDate.className = "card-text";
-                        const small = document.createElement("small");
-                        small.className = "text-muted";
-                        small.innerText = item.pubDate;
-                        pubDate.appendChild(small);
-
-                        cardBody.appendChild(title);
-                        cardBody.appendChild(description);
-                        cardBody.appendChild(pubDate);
-                        textCol.appendChild(cardBody);
-                        row.appendChild(imgCol);
-                        row.appendChild(textCol);
-                        card.appendChild(row);
-                        newsContainer.appendChild(card);
+                        newsContainer.appendChild(newsItem);
                     });
                 } catch (error) {
-                    document.getElementById("newsContainer").innerHTML = "<p>뉴스 응답 파싱 실패: " + error + "</p>";
+                    document.getElementById("newsContainer").innerHTML =
+                        `<div class="alert alert-danger">뉴스 응답 파싱 실패: ${error}</div>`;
                 }
             })
             .catch(error => {
                 document.getElementById("togetherResult").innerText = "에러 발생: " + error;
-                document.getElementById("newsContainer").innerHTML = "<p>에러 발생: " + error + "</p>";
+                document.getElementById("newsContainer").innerHTML =
+                    `<div class="alert alert-danger">에러 발생: ${error}</div>`;
             });
+    });
+
+    // Enter 키로 검색 실행
+    document.getElementById("queryInput").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            document.getElementById("askBtn").click();
+        }
     });
 });
