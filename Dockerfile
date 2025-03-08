@@ -8,7 +8,7 @@ COPY src ./src
 RUN mvn clean package
 
 # Run stage: Tomcat 10 기반 이미지 사용 (Jakarta EE)
-FROM tomcat:10.1.36-jdk17-temurin
+FROM tomcat:10-jdk17-temurin
 # 빌드 스테이지에서 생성한 WAR 파일을 Tomcat의 ROOT.war로 복사
 COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
 # Tomcat 기본 포트 8080 노출
