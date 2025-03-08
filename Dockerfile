@@ -1,8 +1,18 @@
-# Tomcat 10 이미지를 사용 (Tomcat 10은 Jakarta EE 기반)
-FROM tomcat:10.1.36
+# Build stage: Maven 빌드
+FROM maven:3.8.6-openjdk-17 AS build
+WORKDIR /app
+# pom.xml과 소스 코드를 복사합니다.
+COPY pom.xml .
+COPY src ./src
+# Maven으로 프로젝트 빌드 (WAR 파일 생성)
+RUN mvn clean package
 
-# WAR 파일을 Tomcat의 webapps 디렉토리로 복사
-COPY target/kbo-master.war /usr/local/tomcat/webapps/
-
+# Run stage: Tomcat 10 기반 이미지 사용 (Jakarta EE)
+FROM tomcat:10.1.36-jdk17-temurin
+# 기본 ROOT 어플리케이션 삭제 (필요시)
+RUN rm -rf /usr/local/tomcat/webapps/ROOT*
+# 빌드 스테이지에서 생성한 WAR 파일을 Tomcat의 ROOT.war로 복사
+COPY --from=build /app/target/kbo-master.war /usr/local/tomcat/webapps/ROOT.war
 # Tomcat 기본 포트 8080 노출
 EXPOSE 8080
+CMD ["catalina.sh", "run"]
