@@ -4,5 +4,13 @@
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
          https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
+  <servlet>
+    <servlet-name>BaseballServlet</servlet-name>
+    <servlet-class>com.example.baseball.BaseballServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BaseballServlet</servlet-name>
+    <url-pattern>/baseball</url-pattern>
+  </servlet-mapping>
   <display-name>Archetype Created Web Application</display-name>
 </web-app>

@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet("/baseball")
 public class BaseballServlet extends HttpServlet {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
