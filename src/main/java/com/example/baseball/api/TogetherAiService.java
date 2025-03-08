@@ -24,9 +24,12 @@ public class TogetherAiService {
         dotenv = Dotenv.load();
         endpoint = dotenv.get("TOGETHER_AI_API_ENDPOINT");
         apiKey = dotenv.get("TOGETHER_AI_API_KEY");
+        System.out.println("Loaded Together AI Endpoint: " + endpoint);
+        System.out.println("Loaded Together AI API Key: " + apiKey);
     }
 
     public String askQuestion(String query) throws IOException {
+        System.out.println("Calling Together AI API for query: " + query);
 
         HttpPost request = new HttpPost(endpoint);
         // 인증 및 Content-Type 헤더 설정
@@ -35,9 +38,11 @@ public class TogetherAiService {
 
         // 요청 페이로드 구성
         Map<String, Object> payload = new HashMap<>();
-
+        // 모델 이름은 .env에서 관리 (없으면 기본값 togetherai-chat 사용)
         String model = dotenv.get("TOGETHER_AI_MODEL");
-
+        if (model == null || model.isEmpty()) {
+            model = "togetherai-chat";
+        }
         payload.put("model", model);
 
         Map<String, String> systemMsg = new HashMap<>();
@@ -56,6 +61,8 @@ public class TogetherAiService {
         payload.put("max_tokens", 300);
 
         String jsonPayload = objectMapper.writeValueAsString(payload);
+        System.out.println("Together AI API URL: " + endpoint);
+        System.out.println("Payload: " + jsonPayload);
 
         request.setEntity(new StringEntity(jsonPayload, StandardCharsets.UTF_8));
 
@@ -63,7 +70,13 @@ public class TogetherAiService {
              CloseableHttpResponse response = httpClient.execute(request)) {
             int statusCode = response.getStatusLine().getStatusCode();
             String responseBody = EntityUtils.toString(response.getEntity());
-            return responseBody;
+            System.out.println("HTTP Status: " + statusCode);
+            System.out.println("Together AI API response: " + responseBody);
+
+            // <think> 태그와 그 안의 내용을 제거 (Java에서는 (?s) 플래그 사용 가능)
+            String cleanedResponse = responseBody.replaceAll("(?s)<think>.*?</think>", "").trim();
+            System.out.println("Cleaned Together AI API response: " + cleanedResponse);
+            return cleanedResponse;
         }
     }
 }

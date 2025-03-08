@@ -23,7 +23,6 @@ public class BaseballServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String query = request.getParameter("query");
-        System.out.println("Received query in Servlet: " + query);
 
         Map<String, Object> result = new HashMap<>();
         result.put("message", "Hello, Baseball AI!");
@@ -31,12 +30,10 @@ public class BaseballServlet extends HttpServlet {
 
         if (query != null && !query.isEmpty()) {
             try {
-                System.out.println("Calling TogetherAiService...");
                 String togetherAiResponse = togetherAiService.askQuestion(query);
-                System.out.println("Calling NaverService...");
-                String naverResponse = naverService.getNews(query);
+                String naverNewsResponse = naverService.getNews(query);
                 result.put("togetherAiResponse", togetherAiResponse);
-                result.put("naverResponse", naverResponse);
+                result.put("naverResponse", naverNewsResponse);
             } catch (Exception e) {
                 e.printStackTrace();
                 result.put("error", e.getMessage());

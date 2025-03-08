@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>야구 AI 추천 서비스</title>
+  <!-- Bootstrap CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container">
+    <a class="navbar-brand" href="#">야구 AI 서비스</a>
+  </div>
+</nav>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <h2 class="mb-4 text-center">야구 관련 질문을 입력하세요</h2>
+      <div class="input-group mb-3">
+        <input type="text" id="queryInput" class="form-control" placeholder="예: 이정후 선수 최신 뉴스 알려줘">
+        <button id="askBtn" class="btn btn-primary">질문하기</button>
+      </div>
+      <!-- Together AI 응답 박스 -->
+      <div class="card mb-3">
+        <div class="card-header bg-secondary text-white">AI 응답</div>
+        <div class="card-body">
+          <pre id="togetherResult" class="mb-0"></pre>
+        </div>
+      </div>
+      <!-- 네이버 뉴스 응답 박스 -->
+      <div class="card">
+        <div class="card-header bg-secondary text-white">네이버 뉴스</div>
+        <div class="card-body" id="newsContainer">
+          <!-- 뉴스 카드들이 동적으로 생성됩니다 -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS Bundle (includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Custom JS -->
+<script src="scripts/app.js"></script>
+</body>
+</html>
