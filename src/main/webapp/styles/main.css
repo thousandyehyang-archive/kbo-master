@@ -1,4 +1,4 @@
-/* main.css */
+/* main.css - 개선 버전 */
 @font-face {
     font-family: 'GongGothicMedium';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff') format('woff');
@@ -28,6 +28,25 @@ body {
     background-color: var(--gray-bg);
     color: var(--dark-text);
     line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #4389a2;
 }
 
 /* Navbar styling */
@@ -35,6 +54,9 @@ body {
     background: linear-gradient(90deg, var(--primary-color) 0%, #4389a2 100%);
     padding: 15px 0;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 .navbar-brand {
@@ -43,11 +65,22 @@ body {
     font-weight: bold;
     display: flex;
     align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover {
+    transform: scale(1.05);
 }
 
 .brand-icon {
     margin-right: 10px;
     font-size: 26px;
+    animation: bounceIcon 2s infinite;
+}
+
+@keyframes bounceIcon {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
 }
 
 /* Hero section */
@@ -58,17 +91,38 @@ body {
     text-align: center;
     border-radius: 0 0 50px 50px;
     margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://via.placeholder.com/1920x1080') center/cover no-repeat;
+    opacity: 0.1;
+    z-index: 0;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
 }
 
 .hero-title {
     font-size: 3rem;
     margin-bottom: 15px;
     font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .hero-subtitle {
     font-size: 1.2rem;
     opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 /* Search container */
@@ -84,6 +138,12 @@ body {
     border-radius: var(--card-radius);
     box-shadow: var(--card-shadow);
     padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
 }
 
 .search-form .input-group {
@@ -106,6 +166,11 @@ body {
     font-size: 16px;
     padding: 15px 10px;
     box-shadow: none;
+    transition: all 0.3s ease;
+}
+
+#queryInput:focus {
+    background-color: rgba(26, 42, 108, 0.05);
 }
 
 .search-btn {
@@ -116,11 +181,43 @@ body {
     font-weight: bold;
     border-radius: 0 50px 50px 0;
     transition: all 0.3s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+.search-btn:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: all 0.5s;
+}
+
+.search-btn:hover:before {
+    left: 100%;
 }
 
 .search-btn:hover {
     background: linear-gradient(90deg, #4389a2 0%, var(--primary-color) 100%);
     transform: translateY(-2px);
+}
+
+/* Loader animation */
+.loader {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(26, 42, 108, 0.1);
+    border-radius: 50%;
+    border-top-color: var(--primary-color);
+    animation: spin 1s ease-in-out infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
 
 /* Content cards */
@@ -135,11 +232,12 @@ body {
     overflow: hidden;
     margin-bottom: 30px;
     border: none;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .content-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
 }
 
 .card-header {
@@ -159,6 +257,11 @@ body {
     justify-content: center;
     margin-right: 15px;
     background: linear-gradient(135deg, var(--primary-color) 0%, #4389a2 100%);
+    transition: transform 0.3s ease;
+}
+
+.content-card:hover .header-icon {
+    transform: rotate(360deg);
 }
 
 .header-icon i {
@@ -185,6 +288,40 @@ body {
     line-height: 1.8;
 }
 
+/* Player Stats Grid */
+.player-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.stat-card {
+    background: linear-gradient(145deg, #f8f9fa, #ffffff);
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: #666;
+}
+
 /* Updated News Items Styling */
 #newsContainer {
     display: flex;
@@ -202,7 +339,7 @@ body {
 }
 
 .news-item-card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-3px) scale(1.02);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 
@@ -211,6 +348,11 @@ body {
     height: 100%;
     object-fit: cover;
     border-radius: 0;
+    transition: transform 0.5s ease;
+}
+
+.news-item-card:hover .news-thumbnail {
+    transform: scale(1.05);
 }
 
 .news-content {
@@ -256,11 +398,28 @@ body {
     text-decoration: none;
     transition: color 0.2s ease;
     margin-top: auto;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 2px;
+}
+
+.news-link:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
 }
 
 .news-link:hover {
     color: #4389a2;
-    text-decoration: underline;
+}
+
+.news-link:hover:after {
+    width: 100%;
 }
 
 /* Footer */
@@ -269,6 +428,50 @@ body {
     color: white;
     padding: 30px 0;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.footer:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--accent-color), var(--secondary-color), var(--accent-color));
+}
+
+.footer-content {
+    position: relative;
+    z-index: 1;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.social-link {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.social-link i {
+    color: white;
 }
 
 /* Media queries */
@@ -315,6 +518,10 @@ body {
         font-size: 13px;
         -webkit-line-clamp: 2;
     }
+
+    .player-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 /* Animation */
@@ -323,14 +530,145 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-.hero-section, .search-card, .content-card {
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.hero-section, .search-card {
     animation: fadeIn 0.8s ease forwards;
 }
 
-.content-card:nth-child(2) {
-    animation-delay: 0.2s;
+.player-card {
+    animation: slideInLeft 0.8s ease forwards;
+}
+
+.news-card {
+    animation: slideInRight 0.8s ease forwards;
 }
 
 .news-item-card {
     animation: fadeIn 0.4s ease forwards;
+}
+
+/* Theme Toggle */
+.theme-toggle {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(30deg);
+}
+
+.theme-toggle i {
+    color: white;
+    font-size: 20px;
+}
+
+/* Dark Mode */
+.dark-mode {
+    --gray-bg: #121212;
+    --dark-text: #f5f5f5; /* 기본 텍스트 색상을 흰색 계열로 */
+    --light-text: #222831;
+    --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode .content-card,
+.dark-mode .search-card,
+.dark-mode .news-item-card {
+    background-color: #1e1e1e;
+    border-color: #333;
+}
+
+.dark-mode .card-header {
+    background-color: #1e1e1e;
+    border-color: #333;
+}
+
+.dark-mode .input-group-text {
+    background-color: #1e1e1e;
+}
+
+.dark-mode #queryInput {
+    background-color: #1e1e1e;
+    color: #f5f5f5;
+}
+
+.dark-mode .news-title {
+    color: #f5f5f5;
+}
+
+.dark-mode .news-description {
+    color: #aaa;
+}
+
+.dark-mode .stat-card {
+    background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+}
+
+/* 다크모드에서 muted 텍스트 (예: "선수 검색 시 관련 뉴스가 이곳에 표시됩니다.") 색상 변경 */
+.dark-mode .text-muted {
+    color: #f5f5f5 !important;
+}
+
+/* 다크모드에서 placeholder 텍스트 (예: "선수 이름을 입력하세요") 색상 변경 */
+.dark-mode ::placeholder {
+    color: #f5f5f5;
+}
+
+/* 다크모드에서 footer의 날짜 또는 기타 텍스트 변경 (예시) */
+.dark-mode .footer p {
+    color: #f5f5f5;
+}
+
+/* Scroll Reveal Animation */
+.reveal {
+    opacity: 0;
+    transition: all 1s ease;
+}
+
+.reveal.active {
+    opacity: 1;
+}
+
+.reveal-top {
+    transform: translateY(50px);
+}
+
+.reveal-top.active {
+    transform: translateY(0);
+}
+
+.reveal-left {
+    transform: translateX(-50px);
+}
+
+.reveal-left.active {
+    transform: translateX(0);
+}
+
+.reveal-right {
+    transform: translateX(50px);
+}
+
+.reveal-right.active {
+    transform: translateX(0);
 }

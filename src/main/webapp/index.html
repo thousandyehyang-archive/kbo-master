@@ -8,6 +8,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Google Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Custom CSS -->
   <link rel="stylesheet" href="styles/main.css">
 </head>
@@ -17,14 +19,18 @@
     <a class="navbar-brand" href="#">
       <span class="brand-icon">⚾</span> KBO MASTER
     </a>
+    <button class="theme-toggle" id="themeToggle">
+      <i class="material-icons" id="themeIcon">dark_mode</i>
+    </button>
   </div>
 </nav>
 
 <div class="hero-section">
-  <div class="container">
+  <div class="hero-background"></div>
+  <div class="container hero-content">
     <div class="row justify-content-center">
       <div class="col-lg-8 text-center">
-        <h1 class="hero-title">KBO 선수 정보 탐색</h1>
+        <h1 class="hero-title">KBO 선수 검색하기</h1>
         <p class="hero-subtitle">한국 프로야구의 모든 스타들을 만나보세요</p>
       </div>
     </div>
@@ -53,7 +59,7 @@
   <div class="row justify-content-center">
     <div class="col-lg-8">
       <!-- 선수 정보 카드 -->
-      <div class="content-card player-card">
+      <div class="content-card player-card reveal reveal-left">
         <div class="card-header">
           <div class="header-icon">
             <i class="material-icons">person</i>
@@ -61,12 +67,15 @@
           <h3>선수 정보</h3>
         </div>
         <div class="card-body">
-          <pre id="togetherResult" class="result-content">선수 이름을 입력하고 검색 버튼을 클릭하세요.</pre>
+          <div id="playerInfo">
+            <pre id="togetherResult" class="result-content">선수 이름을 입력하고 검색 버튼을 클릭하세요.</pre>
+          </div>
+          <div id="playerStatsGrid" class="player-stats-grid"></div>
         </div>
       </div>
 
       <!-- 뉴스 정보 카드 -->
-      <div class="content-card news-card mt-4">
+      <div class="content-card news-card mt-4 reveal reveal-right">
         <div class="card-header">
           <div class="header-icon">
             <i class="material-icons">newspaper</i>
@@ -84,10 +93,16 @@
 </div>
 
 <footer class="footer mt-5">
-  <div class="container">
+  <div class="container footer-content">
     <div class="row">
       <div class="col-12 text-center">
         <p>© 2025 KBO MASTER - 모든 KBO 선수들의 정보를 한 곳에서</p>
+        <div class="social-links">
+          <a href="https://www.facebook.com/kbo1982" class="social-link"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://x.com/KBOleague" class="social-link"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.instagram.com/kbo.offIcial" class="social-link"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.youtube.com/channel/UCoVz66yWHzVsXAFG8WhJK9g" class="social-link"><i class="fab fa-youtube"></i></a>
+        </div>
       </div>
     </div>
   </div>
