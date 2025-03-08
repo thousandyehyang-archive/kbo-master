@@ -173,7 +173,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     }
 
                     // fallback 이미지 URL (절대 URL)
-                    const fallbackImage = "https://via.placeholder.com/300x200?text=No+Image";
+                    const fallbackImage = "https://www.tving.com/img/kbo/meta/kbo_meta_share.png";
 
                     items.forEach(item => {
                         // 뉴스 카드 생성
