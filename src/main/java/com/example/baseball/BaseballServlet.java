@@ -1,7 +1,7 @@
 package com.example.baseball;
 
-import com.example.baseball.api.TogetherAiService;
 import com.example.baseball.api.NaverService;
+import com.example.baseball.api.TogetherAiService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
