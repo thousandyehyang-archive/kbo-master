@@ -1,5 +1,5 @@
 # Build stage: Maven 빌드
-FROM maven:3.9.9-eclipse-temurin-17 AS build
+FROM maven:3.8.5-openjdk-17 AS build
 WORKDIR /app
 # pom.xml과 소스 코드를 복사합니다.
 COPY pom.xml .
