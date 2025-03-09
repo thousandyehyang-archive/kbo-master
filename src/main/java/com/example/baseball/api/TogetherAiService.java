@@ -59,7 +59,7 @@ public class TogetherAiService {
         // 시스템 메시지와 사용자 메시지를 모두 포함 (순서대로 전송)
         payload.put("messages", List.of(systemMsg, userMsg));
 
-        payload.put("temperature", 0.7);
+        payload.put("temperature", 0.6);
         payload.put("max_tokens", 300);
 
         String jsonPayload = objectMapper.writeValueAsString(payload);
