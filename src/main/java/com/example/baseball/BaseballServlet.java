@@ -19,6 +19,12 @@ public class BaseballServlet extends HttpServlet {
     private final NaverService naverService = new NaverService();
 
     @Override
+    public void init() throws ServletException {
+        super.init();
+        System.out.println("BaseballServlet 초기화 완료!");
+    }
+
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String query = request.getParameter("query");
