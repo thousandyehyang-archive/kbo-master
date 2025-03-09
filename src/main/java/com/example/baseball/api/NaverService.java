@@ -20,17 +20,23 @@ public class NaverService {
     private final String newsApiUrl;
     private final String clientId;
     private final String clientSecret;
-    private final Dotenv dotenv;
+//    private final Dotenv dotenv;
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final String defaultImageUrl = "https://via.placeholder.com/300x200?text=No+Image";
+    private final String defaultImageUrl = "https://www.tving.com/img/kbo/meta/kbo_meta_share.png";
 
     public NaverService() {
-        dotenv = Dotenv.load();
-        newsApiUrl = dotenv.get("NAVER_API_URL");
-        clientId = dotenv.get("NAVER_CLIENT_ID");
-        clientSecret = dotenv.get("NAVER_CLIENT_SECRET");
+//        dotenv = Dotenv.load();
+//        newsApiUrl = dotenv.get("NAVER_API_URL");
+//        clientId = dotenv.get("NAVER_CLIENT_ID");
+//        clientSecret = dotenv.get("NAVER_CLIENT_SECRET");
+//        System.out.println("Loaded NAVER_API_URL: " + newsApiUrl);
+//        System.out.println("Loaded NAVER_CLIENT_ID: " + clientId);
+        newsApiUrl = System.getenv("NAVER_API_URL");
+        clientId = System.getenv("NAVER_CLIENT_ID");
+        clientSecret = System.getenv("NAVER_CLIENT_SECRET");
         System.out.println("Loaded NAVER_API_URL: " + newsApiUrl);
         System.out.println("Loaded NAVER_CLIENT_ID: " + clientId);
+
     }
 
     public String getNews(String query) throws IOException {

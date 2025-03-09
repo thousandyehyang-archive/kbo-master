@@ -17,15 +17,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class TogetherAiService {
     private final String endpoint;
     private final String apiKey;
-    private final Dotenv dotenv;
+//    private final Dotenv dotenv;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public TogetherAiService() {
-        dotenv = Dotenv.load();
-        endpoint = dotenv.get("TOGETHER_AI_API_ENDPOINT");
-        apiKey = dotenv.get("TOGETHER_AI_API_KEY");
-        System.out.println("Loaded Together AI Endpoint: " + endpoint);
-        System.out.println("Loaded Together AI API Key: " + apiKey);
+//        dotenv = Dotenv.load();
+//        endpoint = dotenv.get("TOGETHER_AI_API_ENDPOINT");
+//        apiKey = dotenv.get("TOGETHER_AI_API_KEY");
+//        System.out.println("Loaded Together AI Endpoint: " + endpoint);
+//        System.out.println("Loaded Together AI API Key: " + apiKey);
+        endpoint = System.getenv("TOGETHER_AI_API_ENDPOINT");
+        apiKey = System.getenv("TOGETHER_AI_API_KEY");
     }
 
     public String askQuestion(String query) throws IOException {
@@ -39,7 +41,7 @@ public class TogetherAiService {
         // 요청 페이로드 구성
         Map<String, Object> payload = new HashMap<>();
         // 모델 이름은 .env에서 관리 (없으면 기본값 togetherai-chat 사용)
-        String model = dotenv.get("TOGETHER_AI_MODEL");
+        String model = System.getenv("TOGETHER_AI_MODEL");
         if (model == null || model.isEmpty()) {
             model = "togetherai-chat";
         }
@@ -47,7 +49,7 @@ public class TogetherAiService {
 
         Map<String, String> systemMsg = new HashMap<>();
         systemMsg.put("role", "system");
-        systemMsg.put("content", dotenv.get("TOGETHER_AI_PROMPT"));
+        systemMsg.put("content", System.getenv("TOGETHER_AI_PROMPT"));
 
         // 사용자 메시지 추가
         Map<String, String> userMsg = new HashMap<>();
